@@ -1,0 +1,53 @@
+/* Import Premium Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&family=Poppins:wght@300;400;500;600;700&display=swap');
+
+/* Tailwind Directives */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+  
+  body {
+    background-color: #020617; /* Matches deepblue-900 */
+    color: #ffffff;
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* Custom Creative Font Class used in Hero */
+  .font-creative {
+    font-family: 'Dancing Script', cursive;
+  }
+  
+  /* Premium text selection highlight (Ocean Blue) */
+  ::selection {
+    background-color: #0ea5e9; /* ocean */
+    color: #020617; /* deepblue-900 */
+  }
+}
+
+@layer utilities {
+  /* Custom scrollbar for a seamless god-level UI */
+  ::-webkit-scrollbar {
+    width: 8px;
+  }
+  
+  ::-webkit-scrollbar-track {
+    background: #020617; /* deepblue-900 */
+  }
+  
+  ::-webkit-scrollbar-thumb {
+    background: #0284c7; /* ocean-dark */
+    border-radius: 10px;
+    border: 2px solid #020617; /* Gives the scrollbar a nice inset look */
+  }
+  
+  ::-webkit-scrollbar-thumb:hover {
+    background: #0ea5e9; /* ocean */
+  }
+}
