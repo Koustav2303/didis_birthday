@@ -24,49 +24,49 @@ const MusicPlayer = () => {
       id: 1,
       title: "Phoolon Ka Taaron Ka",
       artist: "Kishore kumar",
-      src: "/audio/song1.mp3", 
+      src: "/didis_birthday/audio/song1.mp3", 
       icon: Heart
     },
     {
       id: 2,
       title: "Behna Meri",
       artist: "Swasti Mehul",
-      src: "/audio/song2.mp3",
+      src: "/didis_birthday/audio/song2.mp3",
       icon: Sparkles
     },
     {
       id: 3,
       title: "Behna Meri",
       artist: "Yash Baid",
-      src: "/audio/song3.mp3",
+      src: "/didis_birthday/audio/song3.mp3",
       icon: Star
     },
     {
       id: 4,
       title: "My Sister-I",
       artist: "Koustav",
-      src: "/audio/song4.mp3",
+      src: "/didis_birthday/audio/song4.mp3",
       icon: Moon
     },
     {
       id: 5,
       title: "My Sister-II",
       artist: "Sweetest Sister",
-      src: "/audio/song5.mp3",
+      src: "/didis_birthday/audio/song5.mp3",
       icon: Gift
     },
     {
       id: 6,
       title: "Happy Birthday Sister-I",
       artist: "Koustav",
-      src: "/audio/song6.mp3",
+      src: "/didis_birthday/audio/song6.mp3",
       icon: Sun
     },
     {
       id: 7,
       title: "Happy Birthday Sister-II",
       artist: "Koustav",
-      src: "/audio/song7.mp3",
+      src: "/didis_birthday/audio/song7.mp3",
       icon: Flame // Safely using Flame instead of Infinity
     }
   ];
