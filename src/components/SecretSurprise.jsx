@@ -1,64 +1,29 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Lock, Unlock, Heart, Sparkles } from 'lucide-react';
 
 const SecretSurprise = () => {
-  const [progress, setProgress] = useState(0);
   const [isUnlocked, setIsUnlocked] = useState(false);
-  const [isHovered, setIsHovered] = useState(false);
-  
-  // Refs for our custom hold-to-fill timer
-  const fillIntervalRef = useRef(null);
-  const drainIntervalRef = useRef(null);
+  const [isUnlocking, setIsUnlocking] = useState(false);
 
-  // The logic that fills the circle while she holds the button down
-  const startUnlocking = () => {
-    if (isUnlocked) return;
-    clearInterval(drainIntervalRef.current);
+  // One simple tap handles the entire cinematic sequence
+  const handleTapToUnlock = () => {
+    if (isUnlocking || isUnlocked) return;
     
-    fillIntervalRef.current = setInterval(() => {
-      setProgress((prev) => {
-        if (prev >= 100) {
-          clearInterval(fillIntervalRef.current);
-          setIsUnlocked(true);
-          return 100;
-        }
-        return prev + 1.5; // Controls the speed of the unlock
-      });
-    }, 20);
-  };
+    setIsUnlocking(true); // Starts the animation
 
-  // The logic that drains the circle if she lets go too early
-  const stopUnlocking = () => {
-    if (isUnlocked) return;
-    clearInterval(fillIntervalRef.current);
-    
-    drainIntervalRef.current = setInterval(() => {
-      setProgress((prev) => {
-        if (prev <= 0) {
-          clearInterval(drainIntervalRef.current);
-          return 0;
-        }
-        return prev - 3; // Drains twice as fast as it fills
-      });
-    }, 20);
+    // Wait exactly 2 seconds for the ring to draw, then reveal the letter
+    setTimeout(() => {
+      setIsUnlocked(true);
+    }, 2000);
   };
-
-  // Cleanup intervals on unmount
-  useEffect(() => {
-    return () => {
-      clearInterval(fillIntervalRef.current);
-      clearInterval(drainIntervalRef.current);
-    };
-  }, []);
 
   // SVG Math for the glowing progress ring
   const circleRadius = 60;
   const circumference = 2 * Math.PI * circleRadius;
-  const strokeDashoffset = circumference - (progress / 100) * circumference;
 
   return (
-    <section className="relative py-32 bg-deepblue-900 px-6 sm:px-12 flex justify-center items-center min-h-[80vh] overflow-hidden">
+    <section className="relative py-32 bg-deepblue-900 px-6 sm:px-12 flex justify-center items-center min-h-[80vh] overflow-hidden z-0">
       
       {/* Background ambient lighting */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[60vw] h-[60vw] max-w-[600px] max-h-[600px] bg-ocean/5 rounded-full blur-[100px] pointer-events-none z-0"></div>
@@ -80,19 +45,14 @@ const SecretSurprise = () => {
                 One Last <span className="text-ocean-light">Surprise</span>
               </h2>
               <p className="text-gray-400 mb-12 max-w-md">
-                There is a secret message hidden here. Press and hold the lock to break the seal and reveal your final gift.
+                There is a secret message hidden here. <strong className="text-ocean-light">Tap the lock</strong> to break the seal and reveal your final gift.
               </p>
 
-              {/* The Interactive Hold-to-Unlock Button */}
-              <div 
-                className="relative flex justify-center items-center cursor-pointer group"
-                onPointerDown={startUnlocking}
-                onPointerUp={stopUnlocking}
-                onPointerLeave={stopUnlocking}
-                onMouseEnter={() => setIsHovered(true)}
-                onMouseLeave={() => setIsHovered(false)}
-                // Prevent mobile scrolling while holding
-                style={{ touchAction: 'none' }} 
+              {/* The Effortless One-Tap Button */}
+              <button 
+                onClick={handleTapToUnlock}
+                className="relative flex justify-center items-center cursor-pointer group outline-none"
+                disabled={isUnlocking}
               >
                 {/* SVG Progress Ring */}
                 <svg className="w-40 h-40 -rotate-90 transform" viewBox="0 0 140 140">
@@ -103,34 +63,41 @@ const SecretSurprise = () => {
                     stroke="rgba(255,255,255,0.05)"
                     strokeWidth="4"
                   />
-                  {/* Glowing Fill Ring */}
-                  <circle
+                  {/* Glowing Fill Ring (Animates automatically when tapped) */}
+                  <motion.circle
                     cx="70" cy="70" r={circleRadius}
                     fill="transparent"
                     stroke="#0ea5e9" // ocean color
                     strokeWidth="6"
                     strokeLinecap="round"
                     strokeDasharray={circumference}
-                    strokeDashoffset={strokeDashoffset}
-                    className="transition-all duration-75 drop-shadow-[0_0_10px_rgba(14,165,233,0.8)]"
+                    initial={{ strokeDashoffset: circumference }}
+                    animate={{ strokeDashoffset: isUnlocking ? 0 : circumference }}
+                    transition={{ duration: 2, ease: "easeInOut" }}
+                    className="drop-shadow-[0_0_10px_rgba(14,165,233,0.8)]"
                   />
                 </svg>
 
                 {/* Center Button */}
                 <motion.div 
-                  animate={{ scale: isHovered || progress > 0 ? 0.95 : 1 }}
-                  className={`absolute w-24 h-24 rounded-full flex items-center justify-center transition-colors duration-300 ${
-                    progress > 0 ? 'bg-ocean border-ocean-light shadow-[0_0_30px_rgba(14,165,233,0.6)]' : 'bg-deepblue-800 border-white/10'
+                  animate={{ 
+                    scale: isUnlocking ? 0.9 : 1,
+                    boxShadow: isUnlocking ? "0 0 40px rgba(14,165,233,0.8)" : "0 0 0px rgba(14,165,233,0)"
+                  }}
+                  className={`absolute w-24 h-24 rounded-full flex items-center justify-center transition-colors duration-500 ${
+                    isUnlocking ? 'bg-ocean border-ocean-light' : 'bg-deepblue-800 border-white/10 group-hover:border-ocean/50'
                   } border-2 backdrop-blur-md z-10`}
                 >
-                  <Lock className={`w-10 h-10 ${progress > 0 ? 'text-white' : 'text-gray-400'} transition-colors duration-300`} />
+                  <Lock className={`w-10 h-10 transition-colors duration-500 ${isUnlocking ? 'text-white animate-pulse' : 'text-gray-400 group-hover:text-ocean-light'}`} />
                 </motion.div>
 
-                {/* Floating percentage text */}
-                <div className="absolute -bottom-12 text-ocean-light font-mono font-bold tracking-widest text-lg">
-                  {Math.floor(progress)}%
+                {/* Status Text under the button */}
+                <div className="absolute -bottom-12 w-full text-center">
+                  <span className={`font-mono font-bold tracking-widest text-sm transition-opacity duration-300 ${isUnlocking ? 'text-ocean-light animate-pulse opacity-100' : 'opacity-0'}`}>
+                    UNLOCKING...
+                  </span>
                 </div>
-              </div>
+              </button>
             </motion.div>
           ) : (
             /* --- STATE 2: THE REVEALED LETTER --- */
