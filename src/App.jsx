@@ -1,12 +1,14 @@
 import React from 'react';
 
-// --- Component Imports ---
+// --- All 10 God-Level Components ---
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
 import OurBond from './components/OurBond';
 import Gallery from './components/Gallery';
 import SmileGenerator from './components/SmileGenerator';
 import MusicPlayer from './components/MusicPlayer';
+import CuteNotes from './components/CuteNotes';
+import CarePackage from './components/CarePackage';
 import WishesCard from './components/WishesCard';
 import VirtualCake from './components/VirtualCake';
 import SecretSurprise from './components/SecretSurprise';
@@ -16,55 +18,24 @@ function App() {
   return (
     <div className="bg-deepblue-900 min-h-screen font-sans text-white overflow-hidden selection:bg-ocean selection:text-deepblue-900">
       
-      {/* The God-Level Floating Navigation Bar */}
+      {/* Floating Navigation */}
       <Navbar />
       
-      {/* Main Content Wrapper 
-        Every section has a specific 'id' so the Navbar links know exactly where to scroll.
-      */}
+      {/* Main Content Flow */}
       <main>
-        {/* Chapter 0: The Grand Entrance */}
-        <div id="home">
-          <Hero />
-        </div>
-        
-        {/* Chapter 1: The Interactive Bento Grid Story */}
-        <div id="bond">
-          <OurBond />
-        </div>
-        
-        {/* Chapter 2: The Continuous 3D Cinematic Treats Carousel */}
-        <div id="gallery">
-          <Gallery />
-        </div>
-        
-        {/* The Magic Smile Generator */}
-        <div id="smile">
-          <SmileGenerator />
-        </div>
-        
-        {/* The Nostalgia Music Player */}
-        <div id="music">
-          <MusicPlayer />
-        </div>
-        
-        {/* Chapter 3: The Physics-Based 3D Floating Wishes Cards */}
-        <div id="wishes">
-          <WishesCard />
-        </div>
-        
-        {/* The "Make A Wish" Interactive Candles */}
-        <div id="cake">
-          <VirtualCake />
-        </div>
-        
-        {/* The Final Hold-to-Unlock Secret Vault */}
-        <div id="surprise">
-          <SecretSurprise />
-        </div>
+        <div id="home"><Hero /></div>
+        <div id="bond"><OurBond /></div>
+        <div id="gallery"><Gallery /></div>
+        <div id="smile"><SmileGenerator /></div>
+        <div id="music"><MusicPlayer /></div>
+        <div id="notes"><CuteNotes /></div>
+        <div id="care"><CarePackage /></div>
+        <div id="wishes"><WishesCard /></div>
+        <div id="cake"><VirtualCake /></div>
+        <div id="surprise"><SecretSurprise /></div>
       </main>
       
-      {/* The Grand Finale Signature */}
+      {/* The Grand Finale */}
       <Footer />
       
     </div>
